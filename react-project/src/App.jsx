@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 import NotFound from "./components/NotFound";
+import ProductDetail from "./components/ProductDetail";   // new import
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
