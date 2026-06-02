@@ -203,3 +203,41 @@ header input {
   text-align: center;
   margin-top: 3rem;
 }
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  header nav {
+    margin-top: 0.5rem;
+  }
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+  }
+  .cart-item-actions {
+    justify-content: center;
+    width: 100%;
+  }
+  .cart-total {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    padding: 0.75rem;
+  }
+  .product-card img {
+    height: 120px;
+  }
+  button {
+    padding: 0.4rem 0.8rem;
+  }
+}
