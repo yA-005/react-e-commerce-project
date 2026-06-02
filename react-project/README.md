@@ -5,6 +5,8 @@
 A modern React e‑commerce application built with Vite, React Router, Redux Toolkit, and responsive CSS.
 Features include product listing, search, shopping cart with quantity controls, checkout flow, and lazy loading for performance.
 
+**GitHub Repository:** [https://github.com/yA-005/react-e-commerce-project](https://github.com/yA-005/react-e-commerce-project)
+
 ## ✨ Features
 
 - Browse products (fetched from DummyJSON API)
