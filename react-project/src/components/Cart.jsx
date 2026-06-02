@@ -1,6 +1,7 @@
 
 
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 
 function Cart() {
@@ -20,6 +21,13 @@ function Cart() {
       ))}
       <div style={{ marginTop: "1rem", fontWeight: "bold" }}>
         Total: ${total.toFixed(2)}
+      </div>
+      <div style={{ marginTop: "1rem" }}>
+        <Link to="/checkout">
+          <button style={{ padding: "0.5rem 1rem", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" }}>
+            Proceed to Checkout
+          </button>
+        </Link>
       </div>
     </div>
   );
