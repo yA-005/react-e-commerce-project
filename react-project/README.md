@@ -1,16 +1,63 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 🛍️ ShoppyGlobe – E‑commerce App
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A modern React e‑commerce application built with Vite, React Router, Redux Toolkit, and responsive CSS.
+Features include product listing, search, shopping cart with quantity controls, checkout flow, and lazy loading for performance.
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Browse products (fetched from DummyJSON API)
+- Search products by title (Redux‑based)
+- Add/remove products to cart
+- Adjust item quantities (minimum 1)
+- View cart summary and total
+- Checkout with dummy form and order placement
+- 404 page for unknown routes
+- Fully responsive design (mobile, tablet, desktop)
+- Code splitting & lazy loading for all page components
+- Lazy loading of product images
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 18** (functional components, hooks)
+- **Vite** – fast build tool
+- **React Router** – client‑side routing
+- **Redux Toolkit** – state management (cart, search)
+- **CSS** – custom styling with flex/grid & media queries
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <https://github.com/yA-005/react-e-commerce-project.git>
+   cd react-e-commerce-project
+
+   📁 Project Structure
+
+   src/
+├── components/
+│   ├── Cart.jsx
+│   ├── CartItem.jsx
+│   ├── Checkout.jsx
+│   ├── Header.jsx
+│   ├── NotFound.jsx
+│   ├── ProductDetail.jsx
+│   ├── ProductItem.jsx
+│   └── ProductList.jsx
+├── redux/
+│   ├── cartSlice.js
+│   ├── searchSlice.js
+│   └── store.js
+├── hooks/
+│   └── useFetchProducts.js (optional)
+├── App.jsx
+├── main.jsx
+└── index.css
