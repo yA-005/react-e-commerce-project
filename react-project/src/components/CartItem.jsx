@@ -22,7 +22,7 @@ function CartItem({ item }) {
 
   return (
     <div style={{ display: "flex", gap: "1rem", alignItems: "center", borderBottom: "1px solid #ccc", padding: "0.5rem 0" }}>
-      <img src={item.thumbnail} alt={item.title} width="60" />
+      <img src={item.thumbnail} alt={item.title} loading="lazy" width="60" />
       <div style={{ flex: 1 }}>
         <h4>{item.title}</h4>
         <p>${item.price} x {item.quantity} = ${(item.price * item.quantity).toFixed(2)}</p>
