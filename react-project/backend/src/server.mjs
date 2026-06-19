@@ -5,6 +5,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.mjs';
 import authRoutes from './routes/authRoutes.mjs';
+import productRoutes from './routes/productRoutes.mjs';
+import { auth } from './middleware/auth.mjs';
 
 dotenv.config();
 await connectDB();
@@ -20,6 +22,7 @@ app.get('/test', (req, res) => {
 
 // Public routes
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 // Protected route
 app.get('/api/profile', async (req, res) => {
