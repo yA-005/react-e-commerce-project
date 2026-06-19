@@ -7,6 +7,7 @@ import connectDB from './config/db.mjs';
 import authRoutes from './routes/authRoutes.mjs';
 import productRoutes from './routes/productRoutes.mjs';
 import { auth } from './middleware/auth.mjs';
+import cartRoutes from './routes/cartRoutes.mjs';
 
 dotenv.config();
 await connectDB();
@@ -23,7 +24,7 @@ app.get('/test', (req, res) => {
 // Public routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-
+app.use('/api/cart', cartRoutes);
 // Protected route
 app.get('/api/profile', async (req, res) => {
     
