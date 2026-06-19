@@ -9,12 +9,34 @@ const router = express.Router();
 
 // POST /register
 router.post('/register', async (req, res) => {
-    // will implement in next commit
+    try {
+        const { name, email, password } = req.body;
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        // Create new user (password will be hashed by pre-save hook)
+        const user = new User({ name, email, password });
+        await user.save();
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
+        res.status(201).json({ token, user: { id: user._id, name, email, role: user.role } });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
-// POST /login
-router.post('/login', async (req, res) => {
-    // will implement in next commit
-});
+// POST /login (will be added in commit 14)
+// ...
 
 export default router;
