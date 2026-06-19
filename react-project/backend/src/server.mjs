@@ -31,4 +31,13 @@ app.get('/api/profile', async (req, res) => {
     res.json({ message: 'Protected route accessed', user: req.user });
 });
 
+// ---- Global error handler (must be last) ----
+app.use((err, req, res, next) => {
+    console.error('❌ Global error:', err);
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal server error'
+    });
+});
+
 app.listen(5001, () => console.log('Server running on port 5001'));
+
