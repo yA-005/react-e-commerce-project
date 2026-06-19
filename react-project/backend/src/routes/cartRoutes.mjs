@@ -7,15 +7,14 @@ import { auth } from '../middleware/auth.mjs';
 
 const router = express.Router();
 
-// All cart routes are protected – apply auth middleware to all routes in this router
+// ---- Protect all cart routes ----
 router.use(auth);
 
-// GET /api/cart – view user's cart
+// ---- GET /api/cart – view user's cart (populates product details) ----
 router.get('/', async (req, res) => {
     try {
         let cart = await Cart.findOne({ userId: req.user.userId }).populate('items.productId');
         if (!cart) {
-            // Return empty cart if user has no cart yet
             return res.json({ userId: req.user.userId, items: [] });
         }
         res.json(cart);
@@ -25,7 +24,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST /api/cart – add a product to cart (or increment quantity)
+// ---- POST /api/cart – add product or increment quantity (with product existence check) ----
 router.post('/', async (req, res) => {
     try {
         const { productId, quantity } = req.body;
@@ -33,28 +32,24 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'productId is required' });
         }
 
-        // Validate product exists
+        // ✅ Validation: check if product exists
         const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Find or create user's cart
         let cart = await Cart.findOne({ userId: req.user.userId });
         if (!cart) {
             cart = new Cart({ userId: req.user.userId, items: [] });
         }
 
-        // Check if product already in cart
         const itemIndex = cart.items.findIndex(
             item => item.productId.toString() === productId
         );
         if (itemIndex > -1) {
-            // Increment quantity (or set to provided quantity)
             const qty = quantity || 1;
             cart.items[itemIndex].quantity += qty;
         } else {
-            // Add new item
             cart.items.push({ productId, quantity: quantity || 1 });
         }
 
@@ -67,13 +62,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT /api/cart/:productId – update quantity of a specific product
+// ---- PUT /api/cart/:productId – update quantity (validates quantity > 0) ----
 router.put('/:productId', async (req, res) => {
     try {
         const { productId } = req.params;
         const { quantity } = req.body;
 
-        // Validate quantity
+        // ✅ Validation: quantity must be at least 1
         if (!quantity || quantity < 1) {
             return res.status(400).json({ message: 'Quantity must be at least 1' });
         }
@@ -98,7 +93,25 @@ router.put('/:productId', async (req, res) => {
     }
 });
 
-// DELETE /api/cart/:productId – remove a product from cart (will be in commit 23)
-// We'll add that later.
+// ---- DELETE /api/cart/:productId – remove a product from cart ----
+router.delete('/:productId', async (req, res) => {
+    try {
+        const { productId } = req.params;
+
+        const cart = await Cart.findOne({ userId: req.user.userId });
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        // Remove item from the items array
+        cart.items = cart.items.filter(item => item.productId.toString() !== productId);
+        await cart.save();
+        await cart.populate('items.productId');
+        res.json(cart);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
 export default router;
